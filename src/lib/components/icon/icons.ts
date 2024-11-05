@@ -2,8 +2,6 @@
 // get the icons from https://icones.js.org/ or https://www.svgrepo.com/
 // make sure to edit the BOX to have correct display
 
-export type IconName = keyof typeof icons
-
 export const icons = {
 	hamburger: {
 		box_width: 15,

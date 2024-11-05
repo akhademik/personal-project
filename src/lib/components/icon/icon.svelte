@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { icons, type IconName } from '$lib/components/common/constants'
+	import { icons } from '$lib/components/icon/icons'
+
+	type IconName = keyof typeof icons
 
 	type Icon = {
 		box_width: number
@@ -19,9 +21,7 @@
 	const height = icon.box_height || width
 </script>
 
-<svg
-	class={_class || 'h-8 w-8'}
-	viewBox={`0 0 ${width} ${height}`}>
+<svg class={_class || 'h-8 w-8'} viewBox={`0 0 ${width} ${height}`}>
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html icon.svg}
 </svg>
