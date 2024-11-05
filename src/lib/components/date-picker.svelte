@@ -3,24 +3,20 @@
 	import { DateInput } from 'date-picker-svelte'
 
 	import { locale } from './services'
-
-	type Props = {
-		value?: Date | null
-		onSelect?: (event: CustomEvent<Date>) => void
-	}
+	import type { DatePickerProps } from './types'
 
 	let today = new Date()
 	let minDate = new Date()
 	minDate.setDate(today.getDate() - 120)
 
-	let { value = $bindable(), onSelect = () => {} }: Props = $props()
+	let { value = $bindable(), min, onSelect = () => {} }: DatePickerProps = $props()
 </script>
 
 <DateInput
 	{locale}
 	{value}
 	closeOnSelection
-	min={minDate}
+	{min}
 	max={today}
 	placeholder=""
 	format="dd/MM/yyyy"

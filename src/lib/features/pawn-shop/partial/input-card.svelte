@@ -5,11 +5,13 @@
 	import { updateDate, updateInterestRate, updateValue } from './input-services'
 
 	const pawnItem = new PawnItem()
+
 	const onInput = (event: Event) => updateValue(event, pawnItem.setValue)
 	const onUpdatePawnDate = (event: CustomEvent<Date>) => updateDate(event, pawnItem.setPawnDate)
+	const onUpdateInterestRate = (event: Event) => updateInterestRate(event, pawnItem.setInterestRate)
+
 	const onUpdateRedemptionDate = (event: CustomEvent<Date>) =>
 		updateDate(event, pawnItem.setRedemptionDate)
-	const onUpdateInterestRate = (event: Event) => updateInterestRate(event, pawnItem.setInterestRate)
 </script>
 
 <div class="border border-red-600 p-3">
@@ -24,6 +26,7 @@
 		fieldName="pawn-date"
 		inputType="date"
 		value={pawnItem.pawnDate}
+		min={pawnItem.minPickDate}
 		onSelect={onUpdatePawnDate} />
 	<FormField
 		labelName="Ngày Chuộc"
@@ -40,8 +43,6 @@
 	<div>
 		<h1>Money: {pawnItem.value}</h1>
 		<h1>Rate: {pawnItem.interestRate}</h1>
-		<h1>Date 1: {pawnItem.pawnDate}</h1>
-		<h1>Date 2: {pawnItem.redemptionDate}</h1>
 		<h1>Days: {pawnItem.totalPawnDays}</h1>
 	</div>
 </div>

@@ -8,3 +8,9 @@ export type InputProps = {
 	value: string
 	onInput: (e: Event) => void
 }
+
+export type DatePickerProps = {
+	value?: Date | null
+	min?: Date
+	onSelect?: (event: CustomEvent<Date>) => void
+}

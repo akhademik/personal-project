@@ -3,28 +3,7 @@
 	import Input from '$components/input.svelte'
 	import Label from '$components/label.svelte'
 
-	interface BaseFormField {
-		labelName: string
-		fieldName: string
-	}
-
-	interface TextFormField extends BaseFormField {
-		inputType: 'text'
-		value: string
-		onInput: (event: Event) => void
-	}
-
-	interface DateFormField extends BaseFormField {
-		inputType: 'date'
-		value: Date | null
-		onSelect: (event: CustomEvent<Date>) => void
-	}
-	interface RadioFormField extends BaseFormField {
-		inputType: 'radio'
-		onSelect: (event: Event) => void
-	}
-
-	type FormField = TextFormField | DateFormField | RadioFormField
+	import type { FormField } from './types'
 
 	const rateOptions = [
 		{ text: '5%', rate: 0.05 },
@@ -47,6 +26,7 @@
 			onInput={props.onInput} />
 	{:else if props.inputType === 'date'}
 		<DatePicker
+			min={props.min}
 			value={props.value}
 			onSelect={props.onSelect} />
 	{:else if props.inputType === 'radio'}
