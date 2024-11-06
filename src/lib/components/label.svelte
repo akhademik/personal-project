@@ -4,4 +4,6 @@
 	let { name, forLabel }: LabelProps = $props()
 </script>
 
-<label class="font-bold text-red-400" for={forLabel}>{name} :</label>
+<label
+	class="pr-3 text-lg"
+	for={forLabel}>{name} :</label>

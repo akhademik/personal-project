@@ -5,10 +5,6 @@
 	import { locale } from './services'
 	import type { DatePickerProps } from './types'
 
-	let today = new Date()
-	let minDate = new Date()
-	minDate.setDate(today.getDate() - 120)
-
 	let { value = $bindable(), min, onSelect = () => {} }: DatePickerProps = $props()
 </script>
 
@@ -17,7 +13,7 @@
 	{value}
 	closeOnSelection
 	{min}
-	max={today}
+	max={new Date()}
 	placeholder=""
 	format="dd/MM/yyyy"
 	class="[--date-input-width:190px] [&_input]:h-[35px] [&_input]:text-center"

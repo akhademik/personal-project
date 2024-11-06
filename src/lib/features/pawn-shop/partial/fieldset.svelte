@@ -3,7 +3,7 @@
 	import Input from '$components/input.svelte'
 	import Label from '$components/label.svelte'
 
-	import type { FormField } from './types'
+	import type { FormField } from '../types'
 
 	const rateOptions = [
 		{ text: '5%', rate: 0.05 },
@@ -14,7 +14,7 @@
 	const props: FormField = $props()
 </script>
 
-<div class="flex justify-between gap-2 p-2">
+<div class="my-3 flex items-center justify-between gap-2 px-4">
 	<Label
 		name={props.labelName}
 		forLabel={props.fieldName} />
@@ -30,15 +30,15 @@
 			value={props.value}
 			onSelect={props.onSelect} />
 	{:else if props.inputType === 'radio'}
-		<ul class="flex gap-4">
+		<ul class="flex w-[190px] items-center justify-center gap-4">
 			{#each rateOptions as rate}
-				<li class="flex gap-2">
+				<li class="flex gap-2 text-black">
 					<input
 						name="pawn-interest-rate"
 						value={rate.rate}
 						checked={rate.rate === 0.05}
 						onchange={props.onSelect}
-						type="radio" /><span>{rate.text}</span>
+						type="radio" /><span class={rate.rate === 0.05 ? 'text-red-600' : ''}>{rate.text}</span>
 				</li>
 			{/each}
 		</ul>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputCard from './partial/input-card.svelte'
+	import InputForm from './partial/input-form.svelte'
 </script>
 
-<div class="mt-6 flex w-full items-center justify-center"><InputCard /></div>
+<div class="mt-6 flex w-full items-center justify-center"><InputForm /></div>

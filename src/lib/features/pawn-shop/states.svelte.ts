@@ -1,4 +1,4 @@
-import { daysBetween, getMinDateInput } from '$lib/services/dateTimeHelper'
+import { getInterestValue, getMinPickableDate, getTotalPawnDays } from './services'
 
 export class PawnItem {
 	#itemValue = $state('')
@@ -7,21 +7,28 @@ export class PawnItem {
 	#minPickDate: Date | undefined = $state(undefined)
 	#totalPawnDays = $state(0)
 	#interestRate = $state(0.05)
+	#interestValue: string = $state('')
 
 	get value() {
 		return this.#itemValue
 	}
 
+	get interestValue() {
+		if (!this.#itemValue || !this.#totalPawnDays) return ''
+		this.#interestValue = getInterestValue(this.#itemValue, this.#totalPawnDays, this.#interestRate)
+		return this.#interestValue
+	}
+
 	get minPickDate() {
-		this.#minPickDate = getMinDateInput(this.#redemptionDate, 120)
+		this.#minPickDate = getMinPickableDate(this.#redemptionDate, 120)
 		return this.#minPickDate
 	}
 
 	get totalPawnDays() {
-		if (!this.#pawnDate || !this.#redemptionDate) {
+		if (!this.#pawnDate) {
 			this.#totalPawnDays = 0
 		} else {
-			const days = daysBetween(this.#pawnDate, this.#redemptionDate)
+			const days = getTotalPawnDays(this.#pawnDate, this.#redemptionDate)
 			this.#totalPawnDays = days < 0 ? 1 : days
 			if (days < 0) {
 				this.#redemptionDate = this.#pawnDate
