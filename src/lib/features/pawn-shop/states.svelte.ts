@@ -28,15 +28,12 @@ export class PawnItem {
 	}
 
 	get duration() {
-		if (!this.#startDate) {
-			this.#duration = 0
-		} else {
-			const days = computeLoanDuration(this.#startDate, this.#endDate)
-			this.#duration = days < 0 ? 1 : days
-			if (days < 0) {
-				this.#endDate = this.#startDate
-			}
+		const days = computeLoanDuration(this.#startDate, this.#endDate)
+		if (days < 0) {
+			this.#endDate = this.#startDate
 		}
+
+		this.#duration = Math.max(days, 1)
 		return this.#duration
 	}
 
