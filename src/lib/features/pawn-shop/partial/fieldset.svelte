@@ -14,7 +14,7 @@
 	const props: FormField = $props()
 </script>
 
-<div class="my-3 flex items-center justify-between gap-2 px-4">
+<div class="my-3 flex items-center justify-between gap-2">
 	<Label
 		name={props.labelName}
 		forLabel={props.fieldName} />

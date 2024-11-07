@@ -1,45 +1,52 @@
-import { formatMoneyWithSeparator, formatStringToMoney } from '$lib/services/numberHelper'
+import { addThousandSeparator, formatStringToMoney } from '$lib/services/numberHelper'
 
-function normalizeTimeFromDate(date: Date): Date {
-	const removedTimeDate = new Date(date)
-	removedTimeDate.setHours(0, 0, 0, 0)
-	return removedTimeDate
+function getStartOfDay(date: Date): Date {
+	const startOfDay = new Date(date)
+	startOfDay.setHours(0, 0, 0, 0)
+	return startOfDay
 }
-export function getInterestValue(pawnValue: string, pawnDays: number, monthlyRate: number) {
+export function computeInterest(pawnValue: string, durationInDays: number, monthlyRate: number) {
 	const dailyRate = monthlyRate / 30
-	const interestMoney = Number(pawnValue.replaceAll(',', '')) * dailyRate * pawnDays
-	return formatMoneyWithSeparator(Math.round(interestMoney))
+	const amount = Number(pawnValue.replaceAll(',', ''))
+	const interest = amount * dailyRate * durationInDays
+	return addThousandSeparator(Math.round(interest))
 }
 
-export function getTotalPawnDays(pawnDate: Date, redemptionDate: Date): number {
-	const ONE_DAY = 24 * 60 * 60 * 1000
+export function computeLoanDuration(startDate: Date, endDate: Date): number {
+	const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
 
-	const pawnDateNormalized = normalizeTimeFromDate(pawnDate)
-	const redemptionDateNormalized = normalizeTimeFromDate(redemptionDate)
-	const timeDifference = redemptionDateNormalized.getTime() - pawnDateNormalized.getTime()
-	let totalPawnDays = timeDifference / ONE_DAY
-	totalPawnDays = totalPawnDays >= 0 ? Math.floor(totalPawnDays) + 1 : Math.floor(totalPawnDays)
+	const startDateNoTime = getStartOfDay(startDate)
+	const endDateNoTime = getStartOfDay(endDate)
+	const durationInMs = endDateNoTime.getTime() - startDateNoTime.getTime()
+	let durationInDays = durationInMs / MILLISECONDS_PER_DAY
+	durationInDays = durationInDays >= 0 ? Math.floor(durationInDays) + 1 : Math.floor(durationInDays)
 
-	return totalPawnDays
+	return durationInDays
 }
 
-export function getMinPickableDate(redemptionDate: Date, limitDays: number): Date {
-	const pickedDate = new Date(redemptionDate)
-	const pickableDate = new Date()
-	pickableDate.setDate(pickedDate.getDate() - limitDays)
-	return pickableDate
+export function getEarliestAllowedDate(endDate: Date, maxDaysBack: number): Date {
+	const pickedEndDate = new Date(endDate)
+	const earliestDate = new Date()
+	earliestDate.setDate(pickedEndDate.getDate() - maxDaysBack)
+	return earliestDate
 }
 
-export function updatePawnValue(event: Event, setPawnValue: (pawnValue: string) => void) {
+export function handlePawnValueChange(event: Event, setPawnValue: (pawnValue: string) => void) {
+	const MAX_DIGITS = 11 // 999,999,999 (11 digits)
 	const input = event.target as HTMLInputElement
+
+	if (input.value.length > MAX_DIGITS) input.value = input.value.slice(0, MAX_DIGITS)
 	input.value = formatStringToMoney(input.value)
 	setPawnValue(input.value)
 }
 
-export function updatePickedDate(event: CustomEvent<Date>, setPickedDate: (date: Date) => void) {
+export function handleDateSelection(event: CustomEvent<Date>, setPickedDate: (date: Date) => void) {
 	setPickedDate(event.detail as Date)
 }
-export function updateInterestRate(event: Event, setInterestRate: (rate: number) => void) {
-	const selected = event.currentTarget as HTMLInputElement
-	setInterestRate(selected.value as unknown as number)
+export function handleRateChange(
+	event: Event,
+	setInterestRate: (monthlyInterestRate: number) => void
+) {
+	const interestRateInput = event.currentTarget as HTMLInputElement
+	setInterestRate(interestRateInput.value as unknown as number)
 }

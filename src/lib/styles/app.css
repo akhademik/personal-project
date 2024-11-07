@@ -11,10 +11,10 @@ body {
 
 /* DEBUG CSS */
 
-* {
+/* * {
 	outline: 1px dashed var(--line-color);
 	background: var(--bg-color);
-}
+} */
 
 .o {
 	outline: 1px dashed var(--line-color);

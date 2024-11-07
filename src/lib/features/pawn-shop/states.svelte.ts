@@ -1,9 +1,9 @@
-import { getInterestValue, getMinPickableDate, getTotalPawnDays } from './services'
+import { computeInterest, computeLoanDuration, getEarliestAllowedDate } from './services'
 
 export class PawnItem {
 	#itemValue = $state('')
-	#pawnDate: Date | null = $state(null)
-	#redemptionDate = $state(new Date())
+	#startDate: Date | null = $state(null)
+	#endDate = $state(new Date())
 	#minPickDate: Date | undefined = $state(undefined)
 	#totalPawnDays = $state(0)
 	#interestRate = $state(0.05)
@@ -15,33 +15,33 @@ export class PawnItem {
 
 	get interestValue() {
 		if (!this.#itemValue || !this.#totalPawnDays) return ''
-		this.#interestValue = getInterestValue(this.#itemValue, this.#totalPawnDays, this.#interestRate)
+		this.#interestValue = computeInterest(this.#itemValue, this.#totalPawnDays, this.#interestRate)
 		return this.#interestValue
 	}
 
 	get minPickDate() {
-		this.#minPickDate = getMinPickableDate(this.#redemptionDate, 120)
+		this.#minPickDate = getEarliestAllowedDate(this.#endDate, 120)
 		return this.#minPickDate
 	}
 
 	get totalPawnDays() {
-		if (!this.#pawnDate) {
+		if (!this.#startDate) {
 			this.#totalPawnDays = 0
 		} else {
-			const days = getTotalPawnDays(this.#pawnDate, this.#redemptionDate)
+			const days = computeLoanDuration(this.#startDate, this.#endDate)
 			this.#totalPawnDays = days < 0 ? 1 : days
 			if (days < 0) {
-				this.#redemptionDate = this.#pawnDate
+				this.#endDate = this.#startDate
 			}
 		}
 		return this.#totalPawnDays
 	}
 
-	get pawnDate() {
-		return this.#pawnDate as Date | null
+	get startDate() {
+		return this.#startDate as Date | null
 	}
-	get redemptionDate() {
-		return this.#redemptionDate
+	get endDate() {
+		return this.#endDate
 	}
 	get interestRate() {
 		return this.#interestRate
@@ -49,11 +49,11 @@ export class PawnItem {
 	setValue = (value: string) => {
 		this.#itemValue = value
 	}
-	setPawnDate = (date: Date | null) => {
-		this.#pawnDate = date
+	setStartDate = (date: Date | null) => {
+		this.#startDate = date
 	}
-	setRedemptionDate = (date: Date) => {
-		this.#redemptionDate = date
+	setEndDate = (date: Date) => {
+		this.#endDate = date
 	}
 	setInterestRate = (rate: number) => {
 		this.#interestRate = rate

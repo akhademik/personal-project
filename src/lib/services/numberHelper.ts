@@ -6,6 +6,6 @@ export function formatStringToMoney(input: string) {
 	return input
 }
 
-export function formatMoneyWithSeparator(amount: number): string {
+export function addThousandSeparator(amount: number): string {
 	return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }

@@ -1,47 +1,48 @@
 <script lang="ts">
 	import { PawnItem } from '$lib/features/pawn-shop/states.svelte'
 
-	import { updateInterestRate, updatePawnValue, updatePickedDate } from '../services'
+	import { handleDateSelection, handlePawnValueChange, handleRateChange } from '../services'
 	import Fieldset from './fieldset.svelte'
 
 	const pawnItem = new PawnItem()
 
-	const onInput = (event: Event) => updatePawnValue(event, pawnItem.setValue)
-	const onUpdateInterestRate = (event: Event) => updateInterestRate(event, pawnItem.setInterestRate)
+	const onPawnAmountInput = (event: Event) => handlePawnValueChange(event, pawnItem.setValue)
 
-	const onUpdatePawnDate = (event: CustomEvent<Date>) =>
-		updatePickedDate(event, pawnItem.setPawnDate)
+	const onInterestRateChange = (event: Event) => handleRateChange(event, pawnItem.setInterestRate)
 
-	const onUpdateRedemptionDate = (event: CustomEvent<Date>) =>
-		updatePickedDate(event, pawnItem.setRedemptionDate)
+	const onStartDateChange = (event: CustomEvent<Date>) =>
+		handleDateSelection(event, pawnItem.setStartDate)
+
+	const onEndDateChange = (event: CustomEvent<Date>) =>
+		handleDateSelection(event, pawnItem.setEndDate)
 </script>
 
 <form
-	class="border border-red-600 pb-4 font-bold text-red-400"
+	class="border border-red-600 px-4 pb-4 font-bold text-red-400"
 	on:submit|preventDefault={() => console.log('form submit')}>
 	<Fieldset
 		labelName="Giá Tiền"
 		fieldName="pawn-item-value"
 		inputType="text"
 		value={pawnItem.value}
-		{onInput} />
+		onInput={onPawnAmountInput} />
 	<Fieldset
 		labelName="Ngày Cầm"
 		fieldName="pawn-date"
 		inputType="date"
-		value={pawnItem.pawnDate}
+		value={pawnItem.startDate}
 		min={pawnItem.minPickDate}
-		onSelect={onUpdatePawnDate} />
+		onSelect={onStartDateChange} />
 	<Fieldset
 		labelName="Ngày Chuộc"
-		fieldName="redemption-date"
+		fieldName="end-date"
 		inputType="date"
-		value={pawnItem.redemptionDate}
-		onSelect={onUpdateRedemptionDate} />
+		value={pawnItem.endDate}
+		onSelect={onEndDateChange} />
 	<Fieldset
 		labelName="Lãi Suất"
 		fieldName="pawn-interest-rate"
-		onSelect={onUpdateInterestRate}
+		onSelect={onInterestRateChange}
 		inputType="radio" />
 	<button class="m-auto block border px-4 hover:bg-lime-300">Tính Giá</button>
 	<div>
