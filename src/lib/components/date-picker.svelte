@@ -1,11 +1,10 @@
 <script lang="ts">
-	// https://date-picker-svelte.kasper.space/demo
 	import { DateInput } from 'date-picker-svelte'
 
 	import { locale } from './services'
 	import type { DatePickerProps } from './types'
 
-	let { value = $bindable(), min, onSelect = () => {} }: DatePickerProps = $props()
+	let { value = $bindable(new Date()), min, onSelect = () => {} }: DatePickerProps = $props()
 </script>
 
 <DateInput

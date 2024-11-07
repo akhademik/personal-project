@@ -1,52 +1,74 @@
-import { addThousandSeparator, formatStringToMoney } from '$lib/services/numberHelper'
+import {
+	addThousandSeparator,
+	formatStringToMoney,
+} from '$lib/services/numberHelper'
 
-function getStartOfDay(date: Date): Date {
-	const startOfDay = new Date(date)
-	startOfDay.setHours(0, 0, 0, 0)
-	return startOfDay
+function resetTimeOnDate(date: Date): Date {
+	const dateWithoutTime = new Date(date)
+	dateWithoutTime.setHours(0, 0, 0, 0)
+	return dateWithoutTime
 }
-export function computeInterest(pawnValue: string, durationInDays: number, monthlyRate: number) {
-	const dailyRate = monthlyRate / 30
+export function computeInterest(
+	pawnValue: string,
+	duration: number,
+	rate: number
+) {
+	const dailyRate = rate / 30
 	const amount = Number(pawnValue.replaceAll(',', ''))
-	const interest = amount * dailyRate * durationInDays
+	const interest = amount * dailyRate * duration
 	return addThousandSeparator(Math.round(interest))
 }
 
 export function computeLoanDuration(startDate: Date, endDate: Date): number {
 	const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
 
-	const startDateNoTime = getStartOfDay(startDate)
-	const endDateNoTime = getStartOfDay(endDate)
+	const startDateNoTime = resetTimeOnDate(startDate)
+	const endDateNoTime = resetTimeOnDate(endDate)
 	const durationInMs = endDateNoTime.getTime() - startDateNoTime.getTime()
 	let durationInDays = durationInMs / MILLISECONDS_PER_DAY
-	durationInDays = durationInDays >= 0 ? Math.floor(durationInDays) + 1 : Math.floor(durationInDays)
+
+	durationInDays =
+		durationInDays >= 0
+			? Math.floor(durationInDays) + 1
+			: Math.floor(durationInDays)
 
 	return durationInDays
 }
 
-export function getEarliestAllowedDate(endDate: Date, maxDaysBack: number): Date {
-	const pickedEndDate = new Date(endDate)
+export function computeMinPickDate(endDate: Date, daysLimit: number): Date {
+	const selectedEndDate = new Date(endDate)
 	const earliestDate = new Date()
-	earliestDate.setDate(pickedEndDate.getDate() - maxDaysBack)
+	earliestDate.setDate(selectedEndDate.getDate() - daysLimit)
 	return earliestDate
 }
 
-export function handlePawnValueChange(event: Event, setPawnValue: (pawnValue: string) => void) {
+export function handlePawnValueChange(
+	event: Event,
+	setValue: (value: string) => void
+) {
 	const MAX_DIGITS = 11 // 999,999,999 (11 digits)
 	const input = event.target as HTMLInputElement
 
-	if (input.value.length > MAX_DIGITS) input.value = input.value.slice(0, MAX_DIGITS)
+	if (input.value.length > MAX_DIGITS)
+		input.value = input.value.slice(0, MAX_DIGITS)
 	input.value = formatStringToMoney(input.value)
-	setPawnValue(input.value)
+	setValue(input.value)
 }
 
-export function handleDateSelection(event: CustomEvent<Date>, setPickedDate: (date: Date) => void) {
-	setPickedDate(event.detail as Date)
+export function handleDateSelect(
+	event: CustomEvent<Date>,
+	setDate: (date: Date) => void
+) {
+	setDate(event.detail as Date)
 }
 export function handleRateChange(
 	event: Event,
-	setInterestRate: (monthlyInterestRate: number) => void
+	setRate: (rate: number) => void
 ) {
-	const interestRateInput = event.currentTarget as HTMLInputElement
-	setInterestRate(interestRateInput.value as unknown as number)
+	const rateInput = event.currentTarget as HTMLInputElement
+	setRate(rateInput.value as unknown as number)
+}
+
+export function handleFormSubmit(): void {
+	console.log('form submit')
 }

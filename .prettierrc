@@ -9,11 +9,11 @@
 	"singleQuote": true,
 	"tabWidth": 2,
 	"trailingComma": "es5",
-	"printWidth": 100,
+	"printWidth": 80,
 	"importOrder": ["^@core/(.*)$", "", "^@server/(.*)$", "", "^@ui/(.*)$", "", "^[./]"],
 	"importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
 	"importOrderTypeScriptVersion": "5.0.0",
-	"importOrderCaseSensitive": false,
+	"importOrderCaseSensitive": true,
 	"plugins": [
 		"prettier-plugin-svelte",
 		"prettier-plugin-tailwindcss",
