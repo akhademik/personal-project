@@ -7,6 +7,7 @@
 		handlePawnValueChange,
 		handleRateChange,
 	} from '../services'
+	import type { Item } from '../types'
 	import Fieldset from './fieldset.svelte'
 
 	const pawn = new PawnItem()
@@ -19,11 +20,26 @@
 		handleDateSelect(event, pawn.setEndDate)
 	const onStartDateChange = (event: CustomEvent<Date>) =>
 		handleDateSelect(event, pawn.setStartDate)
+
+	const onFormSubmit = (event: Event) => {
+		event.preventDefault()
+		const item: Item = {
+			id: crypto.randomUUID(),
+			value: pawn.value,
+			duration: pawn.duration,
+			interest: pawn.interest,
+			rate: pawn.rate,
+			note: 'My Note',
+		}
+
+		pawn.addToItems(item)
+	}
+	$inspect(pawn.items)
 </script>
 
 <form
 	class="border border-red-600 px-4 pb-4 [&_label]:font-bold [&_label]:text-red-400"
-	on:submit|preventDefault={handleFormSubmit}>
+	onsubmit={onFormSubmit}>
 	<Fieldset
 		labelName="Giá Tiền"
 		fieldName="pawn-value"
@@ -53,11 +69,4 @@
 		type="submit"
 		class="m-auto block rounded-lg border-2 border-red-400 px-5 py-1 font-bold hover:border-transparent hover:bg-lime-300 hover:text-red-400"
 		>Tính Giá</button>
-	<div>
-		<h1>Money: {pawn.value}</h1>
-		<h1>Rate: {pawn.rate}</h1>
-		<h1>Days: {pawn.duration}</h1>
-		<h1>Interest: {pawn.interest}</h1>
-		<h1>Final: {pawn.lastPayment}</h1>
-	</div>
 </form>

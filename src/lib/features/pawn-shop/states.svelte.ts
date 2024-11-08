@@ -8,6 +8,7 @@ import {
 	computeLoanDuration,
 	computeMinPickDate,
 } from './services'
+import type { Item } from './types'
 
 export class PawnItem {
 	#value = $state('')
@@ -18,9 +19,14 @@ export class PawnItem {
 	#interest = $state('')
 	#minPickDate = $state(new Date())
 	#lastPayment = $state('')
+	#items: Item[] = $state([])
 
 	get value() {
 		return this.#value
+	}
+
+	get items() {
+		return this.#items
 	}
 
 	get lastPayment() {
@@ -64,4 +70,8 @@ export class PawnItem {
 	setRate = (rate: number) => (this.#rate = rate)
 	setStartDate = (date: Date) => (this.#startDate = date)
 	setEndDate = (date: Date) => (this.#endDate = date)
+	addToItems = (item: Item) => {
+		this.#items.push(item)
+		return this.#items.length - 1
+	}
 }

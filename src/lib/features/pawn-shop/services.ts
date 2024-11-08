@@ -3,6 +3,8 @@ import {
 	formatStringToMoney,
 } from '$lib/services/numberHelper'
 
+import type { PawnItem } from './states.svelte'
+
 function resetTimeOnDate(date: Date): Date {
 	const dateWithoutTime = new Date(date)
 	dateWithoutTime.setHours(0, 0, 0, 0)
@@ -66,9 +68,10 @@ export function handleRateChange(
 	setRate: (rate: number) => void
 ) {
 	const rateInput = event.currentTarget as HTMLInputElement
-	setRate(rateInput.value as unknown as number)
+	const rateToNumber = Number(rateInput.value)
+	setRate(rateToNumber)
 }
 
-export function handleFormSubmit(): void {
-	console.log('form submit')
+export function handleFormSubmit(pawnItem: PawnItem): void {
+	const { value, rate, interest } = pawnItem
 }

@@ -1,3 +1,12 @@
+export type Item = {
+	id: string
+	note?: string
+	value: string
+	rate: number
+	duration: number
+	interest: string
+}
+
 interface BaseFields {
 	labelName: string
 	fieldName: string
