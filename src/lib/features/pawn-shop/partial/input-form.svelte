@@ -51,7 +51,7 @@
 		inputType="radio" />
 	<button
 		type="submit"
-		class="m-auto block rounded-lg border-2 border-cyan-900 px-4 hover:bg-lime-300"
+		class="m-auto block rounded-lg border-2 border-red-400 px-5 py-1 font-bold hover:border-transparent hover:bg-lime-300 hover:text-red-400"
 		>Tính Giá</button>
 	<div>
 		<h1>Money: {pawn.value}</h1>

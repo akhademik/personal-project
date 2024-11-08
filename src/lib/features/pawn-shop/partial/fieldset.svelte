@@ -42,7 +42,7 @@
 						type="radio"
 						class="peer absolute h-full w-full cursor-pointer appearance-none" />
 					<span
-						class=" border-2 border-transparent px-2 peer-checked:border-t-blue-600 peer-checked:font-bold peer-checked:text-red-400 peer-hover:border-b-blue-600"
+						class="border-2 border-transparent px-2 peer-checked:border-t-blue-600 peer-checked:font-bold peer-checked:text-red-400 peer-hover:border-b-blue-600"
 						>{text}</span>
 				</li>
 			{/each}
