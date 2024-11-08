@@ -22,7 +22,7 @@
 </script>
 
 <form
-	class="border border-red-600 px-4 pb-4 font-bold text-red-400"
+	class="border border-red-600 px-4 pb-4 [&_label]:font-bold [&_label]:text-red-400"
 	on:submit|preventDefault={handleFormSubmit}>
 	<Fieldset
 		labelName="Giá Tiền"
@@ -50,6 +50,7 @@
 		onSelect={onInterestRateChange}
 		inputType="radio" />
 	<button
+		type="submit"
 		class="m-auto block rounded-lg border-2 border-cyan-900 px-4 hover:bg-lime-300"
 		>Tính Giá</button>
 	<div>

@@ -31,16 +31,22 @@
 			value={props.value}
 			onSelect={props.onSelect} />
 	{:else if props.inputType === 'radio'}
-		<ul class="flex w-[190px] items-center justify-center gap-4">
+		<ul class="flex w-[190px] items-center justify-center gap-5">
 			{#each rateOptions as rate}
-				<li class="flex gap-2 text-black">
-					<input
-						name="pawn-interest-rate"
-						value={rate.rate}
-						checked={rate.rate === 0.05}
-						onchange={props.onSelect}
-						type="radio" /><span
-						class={rate.rate === 0.05 ? 'text-red-600' : ''}>{rate.text}</span>
+				<li class="">
+					<label
+						class="flex cursor-pointer select-none items-center !font-normal !text-black">
+						<input
+							name="pawn-interest-rate"
+							value={rate.rate}
+							checked={rate.rate === 0.05}
+							onchange={props.onSelect}
+							type="radio"
+							class="peer hidden" />
+						<span
+							class="border-2 border-transparent px-2 peer-checked:border-t-blue-600 peer-checked:font-bold peer-checked:text-red-400"
+							>{rate.text}</span>
+					</label>
 				</li>
 			{/each}
 		</ul>
