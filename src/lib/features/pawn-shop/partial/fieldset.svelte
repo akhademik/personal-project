@@ -31,22 +31,21 @@
 			value={props.value}
 			onSelect={props.onSelect} />
 	{:else if props.inputType === 'radio'}
-		<div class="ob flex w-[190px] items-center justify-center gap-5">
+		<ul class="flex w-[190px] items-center justify-center gap-5">
 			{#each rates as { rate, text }}
-				<label
-					class="flex cursor-pointer select-none items-center !font-normal !text-black">
+				<li class="relative">
 					<input
 						name="pawn-interest-rate"
 						value={rate}
 						checked={rate === 0.05}
 						onchange={props.onSelect}
 						type="radio"
-						class="peer hidden" />
+						class="peer absolute h-full w-full cursor-pointer appearance-none" />
 					<span
-						class="border-2 border-transparent px-2 peer-checked:border-t-blue-600 peer-checked:font-bold peer-checked:text-red-400"
+						class=" border-2 border-transparent px-2 peer-checked:border-t-blue-600 peer-checked:font-bold peer-checked:text-red-400 peer-hover:border-b-blue-600"
 						>{text}</span>
-				</label>
+				</li>
 			{/each}
-		</div>
+		</ul>
 	{/if}
 </div>
