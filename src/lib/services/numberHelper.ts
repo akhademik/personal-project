@@ -9,3 +9,7 @@ export function formatStringToMoney(input: string) {
 export function addThousandSeparator(amount: number): string {
 	return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
+
+export function convertStringToNumber(input: string): number {
+	return Number(input.replace(/,/g, ''))
+}

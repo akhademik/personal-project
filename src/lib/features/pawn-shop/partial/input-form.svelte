@@ -58,5 +58,6 @@
 		<h1>Rate: {pawn.rate}</h1>
 		<h1>Days: {pawn.duration}</h1>
 		<h1>Interest: {pawn.interest}</h1>
+		<h1>Final: {pawn.lastPayment}</h1>
 	</div>
 </form>

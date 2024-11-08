@@ -1,4 +1,9 @@
 import {
+	addThousandSeparator,
+	convertStringToNumber,
+} from '$lib/services/numberHelper'
+
+import {
 	computeInterest,
 	computeLoanDuration,
 	computeMinPickDate,
@@ -12,9 +17,17 @@ export class PawnItem {
 	#duration = $state(0)
 	#interest = $state('')
 	#minPickDate = $state(new Date())
+	#lastPayment = $state('')
 
 	get value() {
 		return this.#value
+	}
+
+	get lastPayment() {
+		const value = convertStringToNumber(this.#value)
+		const interest = convertStringToNumber(this.#interest)
+		this.#lastPayment = addThousandSeparator(value + interest)
+		return this.#lastPayment
 	}
 
 	get interest() {
