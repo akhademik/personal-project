@@ -23,6 +23,7 @@
 		<Input
 			name={props.fieldName}
 			value={props.value}
+			placeholder={props.placeholder}
 			onInput={props.onInput} />
 	{:else if props.inputType === 'date'}
 		<DatePicker
@@ -38,7 +39,8 @@
 						value={rate.rate}
 						checked={rate.rate === 0.05}
 						onchange={props.onSelect}
-						type="radio" /><span class={rate.rate === 0.05 ? 'text-red-600' : ''}>{rate.text}</span>
+						type="radio" /><span
+						class={rate.rate === 0.05 ? 'text-red-600' : ''}>{rate.text}</span>
 				</li>
 			{/each}
 		</ul>

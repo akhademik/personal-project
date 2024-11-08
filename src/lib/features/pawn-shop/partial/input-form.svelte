@@ -11,10 +11,14 @@
 
 	const pawn = new PawnItem()
 
-	const onPawnValueInput = (event: Event) => handlePawnValueChange(event, pawn.setValue)
-	const onInterestRateChange = (event: Event) => handleRateChange(event, pawn.setRate)
-	const onEndDateChange = (event: CustomEvent<Date>) => handleDateSelect(event, pawn.setEndDate)
-	const onStartDateChange = (event: CustomEvent<Date>) => handleDateSelect(event, pawn.setStartDate)
+	const onPawnValueInput = (event: Event) =>
+		handlePawnValueChange(event, pawn.setValue)
+	const onInterestRateChange = (event: Event) =>
+		handleRateChange(event, pawn.setRate)
+	const onEndDateChange = (event: CustomEvent<Date>) =>
+		handleDateSelect(event, pawn.setEndDate)
+	const onStartDateChange = (event: CustomEvent<Date>) =>
+		handleDateSelect(event, pawn.setStartDate)
 </script>
 
 <form
@@ -23,6 +27,7 @@
 	<Fieldset
 		labelName="Giá Tiền"
 		fieldName="pawn-value"
+		placeholder="Số tiền cầm"
 		inputType="text"
 		value={pawn.value}
 		onInput={onPawnValueInput} />
@@ -44,7 +49,8 @@
 		fieldName="interest-rate"
 		onSelect={onInterestRateChange}
 		inputType="radio" />
-	<button class="m-auto block rounded-lg border-2 border-cyan-900 px-4 hover:bg-lime-300"
+	<button
+		class="m-auto block rounded-lg border-2 border-cyan-900 px-4 hover:bg-lime-300"
 		>Tính Giá</button>
 	<div>
 		<h1>Money: {pawn.value}</h1>

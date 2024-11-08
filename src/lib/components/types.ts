@@ -8,6 +8,7 @@ export type LabelProps = {
 export type InputProps = {
 	name: string
 	value: string
+	placeholder?: string
 	onInput: (e: Event) => void
 }
 

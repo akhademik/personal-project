@@ -6,6 +6,7 @@ interface BaseFields {
 interface TextForm extends BaseFields {
 	inputType: 'text'
 	value: string
+	placeholder?: string
 	onInput: (event: Event) => void
 }
 

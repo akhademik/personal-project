@@ -4,7 +4,11 @@
 	import { locale } from './services'
 	import type { DatePickerProps } from './types'
 
-	let { value = $bindable(new Date()), min, onSelect = () => {} }: DatePickerProps = $props()
+	let {
+		value = $bindable(new Date()),
+		min,
+		onSelect = () => {},
+	}: DatePickerProps = $props()
 </script>
 
 <DateInput
@@ -13,7 +17,7 @@
 	closeOnSelection
 	{min}
 	max={new Date()}
-	placeholder=""
+	placeholder="Bấm để chọn ngày"
 	format="dd/MM/yyyy"
 	class="[--date-input-width:190px] [&_input]:h-[35px] [&_input]:text-center"
 	on:select={onSelect} />
