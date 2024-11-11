@@ -4,6 +4,7 @@ import {
 } from '$lib/services/numberHelper'
 
 import type { PawnItem } from './states.svelte'
+import type { Item } from './types'
 
 function resetTimeOnDate(date: Date): Date {
 	const dateWithoutTime = new Date(date)
@@ -70,8 +71,4 @@ export function handleRateChange(
 	const rateInput = event.currentTarget as HTMLInputElement
 	const rateToNumber = Number(rateInput.value)
 	setRate(rateToNumber)
-}
-
-export function handleFormSubmit(pawnItem: PawnItem): void {
-	const { value, rate, interest } = pawnItem
 }
